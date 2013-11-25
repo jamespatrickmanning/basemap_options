@@ -65,7 +65,10 @@ def lat2str(deg):
             deg += 1.0
             min -= 60.0
         dir = 'S'
-    return (u"%d\N{DEGREE SIGN} %g' %s") % (np.abs(deg),np.abs(min),dir)
+    if np.floor(min)==0:        
+      return (u"%d\N{DEGREE SIGN}%s") % (np.abs(deg),dir)
+    else:  
+      return (u"%d\N{DEGREE SIGN} %g' %s") % (np.abs(deg),np.abs(min),dir)
   
 def lon2str(deg):
     min = 60 * (deg - np.floor(deg))
@@ -76,11 +79,14 @@ def lon2str(deg):
             deg += 1.0
             min -= 60.0
         dir = 'W'
-    return (u"%d\N{DEGREE SIGN} %g' %s") % (np.abs(deg),np.abs(min),dir)
-
+    if np.floor(min)==0:        
+      return (u"%d\N{DEGREE SIGN}%s") % (np.abs(deg),dir)
+    else:  
+      return (u"%d\N{DEGREE SIGN} %g' %s") % (np.abs(deg),np.abs(min),dir)
+      
 def nearlonlat(lon,lat,lonp,latp):
     """
-    i,min_dist=nearlonlat(lon,lat,lonp,latp)
+    i,min_dist=nearlonlat(lon,lat,lonp,latp) change
     find the closest node in the array (lon,lat) to a point (lonp,latp)
     input:
         lon,lat - np.arrays of the grid nodes, spherical coordinates, degrees
@@ -139,6 +145,23 @@ def nearxy2(x,y,x0,y0): #returns both distance and index
        if distance[ii] == min_dis:
            index.append(ii)
    return min(distance),index[0]
+
+def points_between(lat,lon,x):
+    """ 
+    For 2 positions, interpolate X number of points between them
+    where "lat" and "lon" are two element list
+    "x" is the number of points wanted between them
+    returns lat0,lono
+    """
+    print lat
+    lato=[]
+    lono=[]
+    lati=(lat[1]-lat[0])/float(x)
+    loni=(lon[1]-lon[0])/float(x)
+    for j in range(x):
+        lato.append(lat[0]+lati*j)
+        lono.append(lon[0]+loni*j)
+    return lato,lono
 
 def smooth(x,window_len=11,window='hanning'):
     """smooth the data using a window with requested size.
