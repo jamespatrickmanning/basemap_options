@@ -18,7 +18,7 @@ from mpl_toolkits.basemap import Basemap
 gs=25      # number of bins in the x and y direction so,  if you want more detail, make it bigger
 ss=100     # subsample input data so, if you want more detail, make it smaller
 cont=[-70]    # contour level
-mila=40.;mala=42.;milo=-72.;malo=-69.#min & max lat and lon
+mila=40.;mala=42.;milo=-72.;malo=-69.#min & max lat and lon apparently limited to a few degrees of lat/lon
 #########
 fig = plt.figure()
 ax = fig.add_axes([0.1,0.1,0.8,0.8])
